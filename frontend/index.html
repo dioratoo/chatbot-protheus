@@ -118,7 +118,7 @@
       userMessage.textContent = userInput.value;
       chat.appendChild(userMessage);
 
-      const response = await fetch('https://seu-backend.onrender.com/ask', {
+      const response = await fetch('https://chatbot-protheus-frontend.onrender.com/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userInput.value })
