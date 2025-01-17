@@ -2,10 +2,11 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
-const dbPath = './database/chatbot.db';
+const dbPath = path.resolve(__dirname, '../database/chatbot.db');
 
 app.use(cors());
 app.use(bodyParser.json());
