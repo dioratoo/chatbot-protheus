@@ -1,6 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-const db = new sqlite3.Database('./chatbot.db');
+const dbPath = path.resolve(__dirname, './chatbot.db'); // Caminho absoluto para o banco de dados
+const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
   db.run(`

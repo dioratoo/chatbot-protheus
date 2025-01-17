@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Porta dinâmica fornecida pelo Render
 const dbPath = path.resolve(__dirname, '../database/chatbot.db');
 
 app.use(cors());
@@ -29,7 +29,6 @@ app.get('/ask', (req, res) => {
 app.post('/ask', (req, res) => {
   const question = req.body.question; // Captura a pergunta do corpo da requisição
   const query = 'SELECT resposta FROM perguntas WHERE pergunta = ?'; // SQL para buscar a resposta
-
 
   db.get(query, [question], (err, row) => {
     if (err) {
