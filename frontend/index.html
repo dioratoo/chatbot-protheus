@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Protheus</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .message.bot {
+      color: blue;
+    }
+
+    .message.user {
+      color: green;
+      text-align: right;
+    }
+
+    .input-container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .input-container button {
+      padding: 10px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 0 4px 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div id="chat"></div>
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Digite sua pergunta...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById('user-input');
+      const chat = document.getElementById('chat');
+
+      if (userInput.value.trim() === '') return;
+
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      userMessage.textContent = userInput.value;
+      chat.appendChild(userMessage);
+
+      const response = await fetch('http://localhost:3000/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: userInput.value })
+      });
+
+      const data = await response.json();
+      const botMessage = document.createElement('div');
+      botMessage.className = 'message bot';
+      botMessage.textContent = data.resposta;
+      chat.appendChild(botMessage);
+
+      userInput.value = '';
+    }
+  </script>
+</body>
+</html>
