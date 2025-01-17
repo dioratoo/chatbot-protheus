@@ -27,16 +27,18 @@ app.get('/ask', (req, res) => {
 
 // Rota para responder perguntas
 app.post('/ask', (req, res) => {
-  const question = req.body.question;
-  const query = 'SELECT resposta FROM perguntas WHERE pergunta = ?';
+  const question = req.body.question; // Captura a pergunta do corpo da requisição
+  const query = 'SELECT resposta FROM perguntas WHERE pergunta = ?'; // SQL para buscar a resposta
+
 
   db.get(query, [question], (err, row) => {
     if (err) {
-      res.status(500).json({ error: err.message });
+      console.error('Erro ao buscar resposta:', err.message);
+      res.status(500).json({ error: err.message }); // Erro no servidor
     } else if (row) {
-      res.json({ resposta: row.resposta });
+      res.json({ resposta: row.resposta }); // Responde com a resposta encontrada
     } else {
-      res.json({ resposta: 'Desculpe, não tenho uma resposta para isso no momento.' });
+      res.json({ resposta: 'Desculpe, não tenho uma resposta para isso no momento.' }); // Resposta padrão
     }
   });
 });
