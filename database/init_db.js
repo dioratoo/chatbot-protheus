@@ -1,8 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
 
-const dbPath = path.resolve(__dirname, './chatbot.db'); // Caminho absoluto para o banco de dados
-const db = new sqlite3.Database(dbPath);
+// Conexão com o banco de dados
+const db = new sqlite3.Database('./chatbot.db');
 
 db.serialize(() => {
   db.run(`
@@ -15,7 +14,7 @@ db.serialize(() => {
 
   console.log('Tabela criada ou já existente.');
 
-  // Insira algumas perguntas e respostas iniciais
+  // Inserir perguntas e respostas iniciais
   db.run(`
     INSERT INTO perguntas (pergunta, resposta)
     VALUES
@@ -23,7 +22,7 @@ db.serialize(() => {
       ('Como acessar o Protheus?', 'Você pode acessar o Protheus pelo portal da TOTVS ou via desktop com o cliente instalado.');
   `);
 
-  console.log('Perguntas e respostas iniciais adicionadas.');
+  console.log('Perguntas e respostas adicionadas.');
 });
 
 db.close();
