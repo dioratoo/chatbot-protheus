@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot Protheus</title>
+  <title>Chatbot Protheus e GLPI</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f0f8ff; /* Azul claro */
       margin: 0;
       padding: 0;
       display: flex;
@@ -17,20 +17,36 @@
     }
 
     .chat-container {
-      width: 90%;
+      width: 95%;
       max-width: 500px;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-container h1 {
+      text-align: center;
+      color: #007BFF; /* Azul do GLPI */
+      margin-bottom: 10px;
+    }
+
+    .chat-container h2 {
+      text-align: center;
+      color: #444;
+      font-size: 14px;
+      margin-bottom: 20px;
     }
 
     .message {
       margin-bottom: 10px;
+      word-wrap: break-word;
     }
 
     .message.bot {
-      color: blue;
+      color: #007BFF; /* Azul do GLPI */
     }
 
     .message.user {
@@ -53,16 +69,34 @@
 
     .input-container button {
       padding: 10px;
-      background: #007BFF;
+      background: #007BFF; /* Azul GLPI */
       color: white;
       border: none;
       cursor: pointer;
       border-radius: 0 4px 4px 0;
     }
+
+    @media (max-width: 480px) {
+      .chat-container {
+        padding: 15px;
+      }
+
+      .input-container input {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .input-container button {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="chat-container">
+    <h1>Chatbot Protheus e GLPI</h1>
+    <h2>Pergunte sobre Protheus e GLPI, e obtenha respostas rápidas e precisas!</h2>
     <div id="chat"></div>
     <div class="input-container">
       <input type="text" id="user-input" placeholder="Digite sua pergunta...">
@@ -71,6 +105,8 @@
   </div>
 
   <script>
+    const inputField = document.getElementById('user-input');
+
     async function sendMessage() {
       const userInput = document.getElementById('user-input');
       const chat = document.getElementById('chat');
@@ -82,7 +118,7 @@
       userMessage.textContent = userInput.value;
       chat.appendChild(userMessage);
 
-      const response = await fetch('https://chatbot-protheus.onrender.com/ask', {
+      const response = await fetch('https://seu-backend.onrender.com/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userInput.value })
@@ -96,6 +132,13 @@
 
       userInput.value = '';
     }
+
+    // Envia mensagem ao pressionar ENTER
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
   </script>
 </body>
 </html>
