@@ -20,6 +20,11 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
+// Rota GET para navegação direta
+app.get('/ask', (req, res) => {
+  res.send('Acesse esta rota usando o método POST para enviar perguntas.');
+});
+
 // Rota para responder perguntas
 app.post('/ask', (req, res) => {
   const question = req.body.question;
